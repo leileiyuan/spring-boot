@@ -1,0 +1,11 @@
+# spring 中使用cache
+在spring中使用缓存关键是配置CacheManager
+CacheManager有很多实现：GuavaCacheManager、EhCacheManager、RedisCacheManager等
+spirng boot 自动配置了多个CacheManager 放在org.springframework.boot.autoconfigure.cache包中
+
+默认使用的SimpleCacheManager，既使用的是ConcurrentMapCacheManager
+
+配置时使用前缀为spring.cache的属性来配置缓存。
+
+# 使用
+加入缓存技术依赖包；配置类上使用@EnableCaching 开启缓存支持。
