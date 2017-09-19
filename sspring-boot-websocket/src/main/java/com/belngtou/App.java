@@ -38,9 +38,10 @@ public class App {
         return "index";
     }
 
+    // @SendTo 推送消息给订阅了/topic/send的路径的浏览器发送
     @MessageMapping("/send")
     @SendTo("/topic/send")
-    public SocketMessage send(SocketMessage message) throws Exception {
+    public SocketMessageRequest send(SocketMessageRequest message) throws Exception {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         message.date = df.format(new Date());
         return message;
@@ -53,5 +54,13 @@ public class App {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         messagingTemplate.convertAndSend("/topic/callback", df.format(new Date()));
         return "callback";
+    }
+
+
+    // 服务端接受到消息以后，会对@SendTo中的地址传送消息。
+    @MessageMapping("/welcome")
+    @SendTo("/topic/getResponse")
+    public SocketMessageResponse say(SocketMessageRequest request){
+        return new SocketMessageResponse("Welcome, " + request.getMessage() + "!");
     }
 }
